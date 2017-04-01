@@ -3,9 +3,10 @@ Expecting to be HIP: <br/> Hawkes Intensity Processes for Social Media Popularit
 ===
 
 This repository contains:
-- the ACTIVE twitted videos dataset;
-- the code required for fitting HIP to real data;
-- a short tutorial on exploring the ACTIVE dataset and fitting HIP to data.
+- the link to [an interactive visualization system](#hip-visualization-system) for HIP;
+- [a short tutorial](#using-hip-and-the-active-dataset-a-short-tutorial) on exploring the ACTIVE dataset and fitting HIP to data;
+- the [ACTIVE twitted videos dataset](#the-active-dataset);
+- the code required for [fitting HIP to real data](#fitting-hip) and [forecasting future popularity with HIP](#forecasting-with-hip).
 
 *Referece*:  
 Rizoiu, M.-A., Xie, L., Sanner, S., Cebrian, M., Yu, H., & Van Hentenryck, P. (2017). 
@@ -13,15 +14,18 @@ Rizoiu, M.-A., Xie, L., Sanner, S., Cebrian, M., Yu, H., & Van Hentenryck, P. (2
 In Proceedings of the *International Conference on World Wide Web 2017*, pp. 1-9. Perth, Australia.
 doi: [10.1145/3038912.3052650](http://doi.org/10.1145/3038912.3052650)
 
-[pdf from arXiv](https://arxiv.org/pdf/1602.06033.pdf)
+[pdf at arxiv with supplementary material](https://arxiv.org/pdf/1602.06033.pdf)
 
-HIP visualiser system
-===
-The visualiser can be publicly accessed by [following this link](http://130.56.253.177/).
+# HIP visualization system
+This is an *interactive* visualization of the plots in the paper: the endo-exo map, observed and fitted popularity series and video metadata.
+It has additional visualizations of TED videos and VEVO musicians.
+Furthermore, it allows users to add and compare their own videos.
+
+**(access the visualizer by clicking on the thumbnail below)**
+
 [<img src="util/demo-screenshot.png">](http://130.56.253.177/)
 
-Using HIP and the ACTIVE dataset: a short tutorial
-===
+# Using HIP and the ACTIVE dataset: a short tutorial
 
 First load (and if required install) the libraries needed for HIP. 
 The file `code/functions-fitting-data.R` contains all functions for simulating and fitting.
@@ -37,6 +41,8 @@ source("code/functions-fitting-data.R")
     Loading required package: pracma
     Loading required package: nloptr
 
+
+## The ACTIVE dataset
 
 Load the ACTIVE dataset from the JSON format. Note that this requires more that 8GB of memory, due to the `jsonlite` library. In order to speed up the dataset loading for subsequent executions, after the first loading we create a R binary file. The binary file speeds up loading considerably.
 
@@ -141,8 +147,10 @@ legend("topleft", legend = c("#views", "#shares"), col = c("black", "red"), lty 
 ```
 
 
-![png](util/HIP-fitting-usage_files/HIP-fitting-usage_16_0.png)
+![png](util/HIP-fitting-usage_files/HIP-fitting-usage_17_0.png)
 
+
+## Fitting HIP
 
 The next step is to fit the parameters of the HIP model to the above video, based on the views and shares series during its first 90 days after upload.
 Views serves as the observed popularity, while shares is the exogeneous stimuli.
@@ -259,8 +267,10 @@ legend("topleft", legend = c("#views", "HIP fit", "#shares"),
 ```
 
 
-![png](util/HIP-fitting-usage_files/HIP-fitting-usage_24_0.png)
+![png](util/HIP-fitting-usage_files/HIP-fitting-usage_26_0.png)
 
+
+## Forecasting with HIP
 
 Following the experimental protocol in the paper, we use HIP to forecast the popularity series between days 91 and 120. We add this forecast to the previously constructed graph.
 
@@ -300,14 +310,14 @@ legend("topleft", legend = c("#views", "HIP fit", "HIP forecast", "#shares"),
 ```
 
 
-![png](util/HIP-fitting-usage_files/HIP-fitting-usage_26_0.png)
+![png](util/HIP-fitting-usage_files/HIP-fitting-usage_29_0.png)
 
 
 License
 ===
 
 Both dataset and code are distributed under the *Creative Commons Attribution-NonCommercial 4.0 International* (CC BY-NC 4.0) license, a copy of which can be obtained [following this link](https://creativecommons.org/licenses/by-nc/4.0/legalcode). 
-If you require a different license, please contact us at [Marian-Andrei@rizoiu.eu](mailto:Marian-Andrei@rizoiu.eu) or [Lexing.Xie@anu.ed]().
+If you require a different license, please contact us at [Marian-Andrei@rizoiu.eu](mailto:Marian-Andrei@rizoiu.eu) or [Lexing.Xie@anu.edu.au](mailto:Lexing.Xie@anu.edu.au).
 
 
 ```R
