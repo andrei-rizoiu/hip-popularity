@@ -112,3 +112,11 @@ axis(4, cex.main = 1.5, cex.axis = 1, cex.lab = 1.5,
      at = round(seq(from = range(shares)[1], to = range(shares)[2], 
                     length.out = 6)) )
 legend("topleft", legend = c("#views", "HIP fit", "HIP forecast", "#shares"), col = c("black", "blue", "darkmagenta", "red"), lty = c(2, 1, 1, 1), bty = "n")
+
+############################# THE MEASURES IN THE PAPERs : endogeneous response, exogeneous sensitivity, virality score and maturity time #############
+measures <- get_endogenous_response(params = fitted_params$model$par)
+
+measures$exo <- as.numeric(fitted_params$model$par["mu1"])
+measures$virality_score <- measures$exo * measures$endo
+
+print(unlist(measures[c("exo", "endo", "virality_score", "maturity_time")]), digits = 3)

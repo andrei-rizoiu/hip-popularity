@@ -8,13 +8,17 @@ This repository contains:
 - the [ACTIVE twitted videos dataset](#the-active-dataset);
 - the code required for [fitting HIP to real data](#fitting-hip) and [forecasting future popularity with HIP](#forecasting-with-hip).
 
-*Referece*:  
-Rizoiu, M.-A., Xie, L., Sanner, S., Cebrian, M., Yu, H., & Van Hentenryck, P. (2017). 
+*Refereces*:  
+Rizoiu, M.-A., Xie, L., Sanner, S., Cebrian, M., Yu, H., & Van Hentenryck, P.
 **Expecting to be HIP: Hawkes Intensity Processes for Social Media Popularity**. 
-In Proceedings of the *International Conference on World Wide Web 2017*, pp. 1-9. Perth, Australia.
-doi: [10.1145/3038912.3052650](http://doi.org/10.1145/3038912.3052650)
-
+In *26th International Conference on World Wide Web - WWW ’17*, pp. 735-744, Perth, Australia, 2017.
+doi: [10.1145/3038912.3052650](http://doi.org/10.1145/3038912.3052650)  
 [pdf at arxiv with supplementary material](https://arxiv.org/pdf/1602.06033.pdf)
+
+Rizoiu, M.-A., & Xie, L. (2017). 
+**Online Popularity under Promotion: Viral Potential, Forecasting, and the Economics of Time**. 
+In *11th International AAAI Conference on Web and Social Media - ICWSM '17*, p. 10, Montréal, Canada, 2017.  
+[pdf at arxiv with supplementary material](https://arxiv.org/pdf/1703.01012.pdf)
 
 # HIP visualization system
 This is an *interactive* visualization of the plots in the paper: the endo-exo map, observed and fitted popularity series and video metadata.
@@ -36,11 +40,6 @@ The file `code/functions-fitting-data.R` contains all functions for simulating a
 source("code/requiredPackages.R")
 source("code/functions-fitting-data.R")
 ```
-
-    Loading required package: jsonlite
-    Loading required package: pracma
-    Loading required package: nloptr
-
 
 ## The ACTIVE dataset
 
@@ -270,6 +269,26 @@ legend("topleft", legend = c("#views", "HIP fit", "#shares"),
 ![png](util/HIP-fitting-usage_files/HIP-fitting-usage_26_0.png)
 
 
+## Computing measures based on HIP
+
+Based on the HIP model fitted here above, we can compute four measures:
+- two measures (*exogeneous sensitivity* and *endogenous response*) used to explain popularity dynamics (see **WWW '17 paper** for more details);
+- two measures (*virality score* and *maturity time*) which discribe the video's online popularity potential, under promotion (proposed in the **ICWSM '17** paper).
+
+
+```R
+measures <- get_endogenous_response(params = fitted_params$model$par)
+
+measures$exo <- as.numeric(fitted_params$model$par["mu1"])
+measures$virality_score <- measures$exo * measures$endo
+
+print(unlist(measures[c("exo", "endo", "virality_score", "maturity_time")]), digits = 3)
+```
+
+               exo           endo virality_score  maturity_time 
+            129.12           1.64         211.84         102.00 
+
+
 ## Forecasting with HIP
 
 Following the experimental protocol in the paper, we use HIP to forecast the popularity series between days 91 and 120. We add this forecast to the previously constructed graph.
@@ -310,7 +329,7 @@ legend("topleft", legend = c("#views", "HIP fit", "HIP forecast", "#shares"),
 ```
 
 
-![png](util/HIP-fitting-usage_files/HIP-fitting-usage_29_0.png)
+![png](util/HIP-fitting-usage_files/HIP-fitting-usage_32_0.png)
 
 
 License
