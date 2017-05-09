@@ -742,7 +742,7 @@ get_endogenous_response <- function(params = c(gamma = 1, eta = 0, K = 0.024, be
   
   ## if still bad, just use a poor approximation, not to return NA
   if (is.na(endo)) {
-      endo <- sum(series, na.rm = T)
+    endo <- sum(series, na.rm = T)
   }
   
   ## determine the characteristic time by substracting consequtive values from series
@@ -756,7 +756,7 @@ get_endogenous_response <- function(params = c(gamma = 1, eta = 0, K = 0.024, be
     maturity_time <- which(cumsum(series) >= omega_perc_maturity_time * endo)[1]
   }
   
-  return( list(endo = endo, n = n, characteristic_time = characteristic_time, maturity_time = maturity_time))
+  return( list(endo = endo, n = n, characteristic_time = characteristic_time, maturity_time = maturity_time, impulse_response = list(series) ))
 }
 
 #' This is an internal function required to correct the names of the parameters.
