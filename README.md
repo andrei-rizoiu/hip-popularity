@@ -340,11 +340,26 @@ legend("topleft", legend = c("#views", "HIP fit", "HIP forecast", "#shares"),
 HIP in Python
 ===
 
-We have also implemented the HIP model in Python, and it can be found in the file `pyhip/pyhip.py`.
-It contains code for simulating and fitting the HIP model based on data, similarly to the R code described here above.
-The two figures here below corresponding to the fitting of HIP in Python, for the videos [bUORBT9iFKc](https://www.youtube.com/watch?v=bUORBT9iFKc) (left) and [cG0nQTYd8ck](https://www.youtube.com/watch?v=cG0nQTYd8ck) (right).
+We have also implemented the HIP model in Python. We provide a main class `pyhip.py` and an exemplary script `pyhip_example.py`.
+The class contains code for fitting and forecast between two time series signals by using HIP model, similarly to the R code described above.
 
-<img src="util/pyhip-fitting.png">
+```python
+test_vid = 'X0ZEt_GZfkA'
+daily_share, daily_view, daily_watch = active_videos[test_vid]
+num_train = 90
+num_test = 30
+num_initialization = 25
+
+from pyhip import HIP
+hip_model = HIP()
+hip_model.initial(daily_share, daily_view, num_train, num_test, num_initialization)
+hip_model.fit_with_bfgs()
+hip_model.print_parameters()
+hip_model.plot_func('YouTubeID={0}'.format(test_vid))
+```
+The figure below corresponds to fitting result of video [X0ZEt_GZfkA](https://www.youtube.com/watch?v=X0ZEt_GZfkA).
+
+![png](util/pyhip-fitting.png)
 
 License
 ===
